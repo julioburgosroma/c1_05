@@ -20,6 +20,7 @@ public class SisInt {
 		int [][] terreno = new int[c][f];
 		generar_terreno(terreno);
 		imprimir_terreno(terreno);
+		escribir_fichero(terreno);
 		Problema problema = new Problema (new Estado(terreno, new Posicion(pos_x, pos_y)));
 		ArrayList<Nodo> solucion = new ArrayList<Nodo>();
 		solucion = busqueda (problema, 0, 9, 4);
@@ -30,6 +31,8 @@ public class SisInt {
 		}
 		else
 			System.out.println("No hay solución.");
+		
+		escribir_ficherosol(solucion);
 	}
 	
 	public static void introducir_datos(){
@@ -66,6 +69,28 @@ public class SisInt {
 		}
 		bw.close();
 	}
+	
+	public static void escribir_ficherosol(ArrayList<Nodo> solucion) throws IOException{
+		BufferedWriter bw = new BufferedWriter(new FileWriter ("solucion.txt"));
+		
+		for (int i = solucion.size()-1; i >= 0; i--){
+			bw.write(" ");
+			bw.write("Movimiento ");
+			bw.write(solucion.get(i).get_accion().toString());
+			bw.newLine();
+			for (int k = 0; k < solucion.get(i).get_estado().get_terreno()[0].length; k++){
+				bw.write(" ");
+				for(int j = 0; j < solucion.get(i).get_estado().get_terreno().length; j++){
+					bw.write(solucion.get(i).get_estado().get_terreno()[j][k]+ " ");
+				}
+				bw.newLine();
+			}
+			bw.newLine();
+		}
+		bw.close();
+	}
+	
+	
 	
 	public static void imprimir_terreno(int [][] terreno){
 		System.out.println("Terreno: ");
