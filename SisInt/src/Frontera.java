@@ -1,13 +1,14 @@
 import java.util.Collection;
-import java.util.PriorityQueue;
+
+import java.util.Queue;
 
 public class Frontera {
-	private PriorityQueue<Nodo> frontera;
+	private Queue<Nodo> frontera;
 	
-	public Frontera(PriorityQueue<Nodo> f){
+	public Frontera(Queue<Nodo> f){
 		frontera = f;
 	}
-	public PriorityQueue<Nodo> getFrontera() {
+	public Queue<Nodo> getFrontera() {
 		return frontera;
 	}
 	

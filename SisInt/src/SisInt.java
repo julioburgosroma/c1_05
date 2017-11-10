@@ -2,8 +2,10 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
+
 import java.util.Scanner;
 
 public class SisInt {
@@ -23,7 +25,7 @@ public class SisInt {
 		escribir_fichero(terreno);
 		Problema problema = new Problema (new Estado(terreno, new Posicion(pos_x, pos_y)));
 		ArrayList<Nodo> solucion = new ArrayList<Nodo>();
-		solucion = busqueda (problema, 0, 9, 4);
+		solucion = Reolver_busqueda (problema, 0, 9, 4);
 		if(!solucion.isEmpty()){
 			System.out.println("Solución encontrada (tamaño "+solucion.size()+"):");
 			for(int i = solucion.size()-1; i >= 0; i--)
@@ -136,11 +138,16 @@ public class SisInt {
 	
 	public static ArrayList<Nodo> lista_nodos (ArrayList<Sucesor> sucesores, Nodo nodo_actual, int prof_max, int estrategia){
 		ArrayList<Nodo> nodos_sucesores = new ArrayList<Nodo>();
-		for (int i = 0; i < sucesores.size(); i++){
-			if(nodo_actual.get_profundidad()+1 <= prof_max){
-				nodos_sucesores.add(new Nodo(sucesores.get(i).get_estado(), sucesores.get(i).get_coste(), sucesores.get(i).get_accion(), nodo_actual, nodo_actual.get_profundidad()+1));
+		
+		
+			for (int i = 0; i < sucesores.size(); i++){
+				if(nodo_actual.get_profundidad()+1 <= prof_max){
+					nodos_sucesores.add(new Nodo(sucesores.get(i).get_estado(), sucesores.get(i).get_coste(), sucesores.get(i).get_accion(), nodo_actual, nodo_actual.get_profundidad()+1));
+				}
 			}
-		}
+		
+		
+		
 		return nodos_sucesores;
 	}
 	
@@ -158,7 +165,7 @@ public class SisInt {
 	public static ArrayList<Nodo> busqueda_acotada (Problema problema, int estrategia, int prof_max){
 		boolean solucion = false;
 		ArrayList<Nodo> camino_solucion = new ArrayList<Nodo>();
-		Frontera frontera = new Frontera(new PriorityQueue<Nodo>());
+		Frontera frontera = new Frontera(new LinkedList<Nodo>());
 		
 		ArrayList<Sucesor> sucesores = new ArrayList<Sucesor>();
 		List<Nodo> nodos_sucesores = new ArrayList<Nodo>();
@@ -176,7 +183,16 @@ public class SisInt {
 				if(actual.get_profundidad()+1 <= prof_max){
 					sucesores = problema.sucesores(actual.get_estado());
 					nodos_sucesores = lista_nodos (sucesores, actual, prof_max, estrategia);
+					
 					frontera.insertar_conjunto(nodos_sucesores);
+					
+					if(estrategia!=0){         // si la estrategia es !0 "profundidid" coloca los sucerores al principio de la fontera
+						int cont=frontera.getFrontera().size();
+						for(int i=0;i<cont;i++){
+			        	frontera.insertar(frontera.elimina());
+						}
+					}
+					
 				}
 			}
 		}
@@ -194,4 +210,37 @@ public class SisInt {
 		}
 		return solucion;
 	}
+	
+	public static ArrayList<Nodo> Reolver_busqueda(Problema problema, int estrategia, int prof_max, int inc_prof){
+		ArrayList<Nodo> solucion = new ArrayList<Nodo>();
+		 int op = estrategia;
+	      
+	      switch ( op ) {
+	      case 0:
+	    	  solucion = busqueda (problema, 0, 9, 4); //anchura
+	           break;
+	      case 1:
+	    	  solucion = busqueda (problema, 1, 9, 9); // profundidad
+	           break;
+	      case 2:
+	    	  solucion = busqueda (problema, 0, 9, 4);//profundidad acotada
+	           break;
+	      case 3:
+	    	  solucion = busqueda (problema, 0, 90, 4);//profundidad iterativa
+	           break;
+	     
+	      default:
+	           System.out.println("error" );
+	           break;
+	      }
+		
+		
+		
+		
+		return solucion;
+	}
+	
+	
+	
+	
 }
