@@ -20,7 +20,20 @@ public class SisInt {
 	public static void main(String args[]) throws IOException{
 		//introducir_datos();
 		int [][] terreno = new int[c][f];
-		generar_terreno(terreno);
+		//generar_terreno(terreno);
+		
+		terreno[0][0]=6;
+		terreno[0][1]=3;
+		terreno[0][2]=5;
+		terreno[1][0]=8;
+		terreno[1][1]=3;
+		terreno[1][2]=6;
+		terreno[2][0]=1;
+		terreno[2][1]=8;
+		terreno[2][2]=5;
+		
+		
+		
 		imprimir_terreno(terreno);
 		escribir_fichero(terreno);
 		Problema problema = new Problema (new Estado(terreno, new Posicion(pos_x, pos_y)));
@@ -184,14 +197,13 @@ public class SisInt {
 					sucesores = problema.sucesores(actual.get_estado());
 					nodos_sucesores = lista_nodos (sucesores, actual, prof_max, estrategia);
 					
-					frontera.insertar_conjunto(nodos_sucesores);
-					
-					if(estrategia!=0){         // si la estrategia es !0 "profundidid" coloca los sucerores al principio de la fontera
-						int cont=frontera.getFrontera().size();
-						for(int i=0;i<cont;i++){
-			        	frontera.insertar(frontera.elimina());
-						}
+					if(estrategia==1){
+					frontera.insertar_conjunto2(nodos_sucesores);
 					}
+					else {
+						frontera.insertar_conjunto(nodos_sucesores);
+					}
+					
 					
 				}
 			}
@@ -223,10 +235,10 @@ public class SisInt {
 	    	  solucion = busqueda (problema, 1, 9, 9); // profundidad
 	           break;
 	      case 2:
-	    	  solucion = busqueda (problema, 0, 9, 4);//profundidad acotada
+	    	  solucion = busqueda (problema, 1, 7, 4);//profundidad acotada
 	           break;
 	      case 3:
-	    	  solucion = busqueda (problema, 0, 90, 4);//profundidad iterativa
+	    	  solucion = busqueda (problema, 1, 90, 4);//profundidad iterativa
 	           break;
 	     
 	      default:
