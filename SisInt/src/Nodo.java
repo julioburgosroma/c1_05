@@ -4,15 +4,16 @@ public class Nodo implements Comparable<Nodo>{
 	private Accion accion;
 	private Nodo padre;
 	private int profundidad;
-	private int valor = (int) (Math.random()*10+1);
+	private int valor=0;
 	
 	public Nodo(){}
-	public Nodo(Estado nuevo_estado, int nuevo_costo, Accion nueva_accion, Nodo nuevo_padre, int nueva_profundidad){
+	public Nodo(Estado nuevo_estado, int nuevo_costo, Accion nueva_accion, Nodo nuevo_padre, int nueva_profundidad, int nuevo_valor){
 		estado = nuevo_estado;
 		costo = nuevo_costo;
 		accion = nueva_accion;
 		padre = nuevo_padre;
 		profundidad = nueva_profundidad;
+		valor = nuevo_valor;
 	}
 	public Estado get_estado(){
 		return estado;
@@ -32,7 +33,6 @@ public class Nodo implements Comparable<Nodo>{
 	public void set_accion(Accion nueva_accion){
 		accion = nueva_accion;
 	}
-	
 	public Nodo get_padre() {
 		return padre;
 	}
@@ -46,14 +46,12 @@ public class Nodo implements Comparable<Nodo>{
 	public void set_profundidad(int profundidad) {
 		this.profundidad = profundidad;
 	}
-	public int get_valor(){
-		return valor;
-	}
+	
 	@Override
 	public int compareTo(Nodo o) {
-        if (valor < o.get_valor()) {
+        if (this.get_valor() < o.get_valor()) {
             return -1;
-        } else if (valor > o.get_valor()) {
+        } else if (this.get_valor() > o.get_valor()) {
             return 1;
         } else {
             return 0;
@@ -62,5 +60,11 @@ public class Nodo implements Comparable<Nodo>{
 	@Override
 	public String toString() {
 		return "Nodo [estado=" + estado + ", costo=" + costo + ", accion=" + accion + "]";
+	}
+	public int get_valor() {
+		return valor;
+	}
+	public void set_valor(int valor) {
+		this.valor = valor;
 	}
 }

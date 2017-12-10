@@ -1,14 +1,13 @@
 import java.util.Collection;
-import java.util.List;
-import java.util.Queue;
+import java.util.PriorityQueue;
 
 public class Frontera {
-	private List<Nodo> frontera;
+	private PriorityQueue<Nodo> frontera;
 	
-	public Frontera(List<Nodo> f){
+	public Frontera(PriorityQueue<Nodo> f){
 		frontera = f;
 	}
-	public List<Nodo> getFrontera() {
+	public PriorityQueue<Nodo> getFrontera() {
 		return frontera;
 	}
 	
@@ -16,19 +15,12 @@ public class Frontera {
 		frontera.add(nodo);
 	}
 	
-	public void insertar2(Nodo nodo){
-		frontera.add(nodo);
-		
-	}
-	
 	public void insertar_conjunto (Collection<? extends Nodo> coleccion){
 		frontera.addAll(coleccion);
 	}
-	public void insertar_conjunto2 (Collection<? extends Nodo> coleccion){
-		frontera.addAll(0,coleccion);
-	}
+	
 	public Nodo elimina(){
-	    	return frontera.remove(0);
+	    	return frontera.poll();
 	    }
 	 
 	public boolean es_vacia(){

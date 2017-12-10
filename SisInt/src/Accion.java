@@ -57,14 +57,14 @@ public class Accion {
 	public void set_reparto_posicion_y(int i, int nueva_y){
 		reparto.get(i).get_lugar().set_y(nueva_y);
 	}
-	@Override
-	public String toString() {
-		return movimiento + ", " + reparto;
-	}
 	public int get_costo() {
 		return costo;
 	}
 	public void set_costo(int nuevo_costo){
 		costo = nuevo_costo;
+	}
+	@Override
+	public String toString() {
+		return movimiento + ", " + reparto;
 	}
 }

@@ -27,7 +27,7 @@ public class Sucesor {
 		this.coste = coste;
 	}
 	public String toString(){
-		return "Acción: "+accion+"\nCoste: "+coste;
+		return "Acción: "+accion+"\nCoste: "+coste +"\nEstado:"+estado;
 		
 	}
 }
